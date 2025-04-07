@@ -34,15 +34,19 @@ export const SessionCounter: React.FC<SessionCounterProps> = ({
 export const AccuracyBar: React.FC<{ accuracy: number }> = ({ accuracy }) => {
   return (
     <div className="mb-6">
-      <div className="w-full bg-gray-200 rounded-full h-4">
+      <div className="w-full bg-gray-200 rounded-full h-5">
         <div 
-          className="bg-primary h-4 rounded-full text-xs text-white text-center"
-          style={{ width: `${accuracy}%` }}
+          className="h-5 rounded-full text-xs text-white text-center flex items-center justify-center"
+          style={{ 
+            width: `${accuracy}%`,
+            backgroundColor: '#0c2576',
+            border: '1px solid #feef33'
+          }}
         >
-          <span>{accuracy}%</span>
+          <span className="font-bold">{accuracy}%</span>
         </div>
       </div>
-      <div className="text-center mt-1 text-sm text-gray-600">Shooting Accuracy</div>
+      <div className="text-center mt-1 text-sm" style={{ color: '#0c2576' }}>Shooting Accuracy</div>
     </div>
   );
 };

@@ -136,7 +136,10 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
   return (
     <div className="bg-white rounded-lg shadow-md p-5 mb-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-primary">New Shooting Session</h2>
+        <h2 className="text-xl font-bold" style={{ color: '#0c2576' }}>
+          The Shooting Circle
+          <span className="block text-sm text-gray-600 font-normal mt-1">New Practice Session</span>
+        </h2>
         <button 
           onClick={onClose}
           className="text-gray-500 hover:text-gray-700"
@@ -240,7 +243,8 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
               <Button
                 type="button"
                 onClick={() => shareSession('email')}
-                className="bg-gray-700 text-white font-medium py-2 px-4 rounded-lg shadow-sm flex items-center justify-center"
+                style={{ backgroundColor: '#0c2576' }}
+                className="text-white font-medium py-2 px-4 rounded-lg shadow-sm flex items-center justify-center"
               >
                 <i className="fas fa-envelope mr-2"></i>
                 Share via Email

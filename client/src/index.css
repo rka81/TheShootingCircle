@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --brentwood-blue: #0c2576;
+  --brentwood-yellow: #feef33;
+  --light-blue: #265cb5;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -9,5 +15,29 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+  }
+  
+  .text-brentwood-blue {
+    color: var(--brentwood-blue);
+  }
+  
+  .text-brentwood-yellow {
+    color: var(--brentwood-yellow);
+  }
+  
+  .bg-brentwood-blue {
+    background-color: var(--brentwood-blue);
+  }
+  
+  .bg-brentwood-yellow {
+    background-color: var(--brentwood-yellow);
+  }
+  
+  .border-brentwood-blue {
+    border-color: var(--brentwood-blue);
+  }
+  
+  .border-brentwood-yellow {
+    border-color: var(--brentwood-yellow);
   }
 }

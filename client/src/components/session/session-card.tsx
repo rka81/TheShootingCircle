@@ -1,7 +1,7 @@
 import React from "react";
 import { format } from "date-fns";
 import { type Session } from "@shared/schema";
-import { getSessionBorderColor } from "../ui/theme";
+import { getSessionBorderColor, getAccuracyColor } from "../ui/theme";
 import { shareViaWhatsApp, shareViaEmail } from "@/lib/storage";
 import {
   Card,
@@ -81,10 +81,6 @@ const SessionCard: React.FC<SessionCardProps> = ({
   );
 };
 
-export function getAccuracyColor(accuracy: number): string {
-  if (accuracy >= 85) return "#42C86A"; // accent
-  if (accuracy >= 70) return "#1E5CB3"; // primary
-  return "#FFD166"; // warning
-}
+// Removed duplicate implementation of getAccuracyColor
 
 export default SessionCard;
