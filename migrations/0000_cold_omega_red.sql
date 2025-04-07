@@ -1,6 +1,9 @@
 
--- Migration SQL
-CREATE TABLE IF NOT EXISTS challenge_attempts (
+-- Drop existing table if it exists
+DROP TABLE IF EXISTS challenge_attempts CASCADE;
+
+-- Create the table with correct schema
+CREATE TABLE challenge_attempts (
     id SERIAL PRIMARY KEY,
     challenge_id INTEGER NOT NULL REFERENCES challenges(id),
     session_id INTEGER NOT NULL REFERENCES sessions(id),
