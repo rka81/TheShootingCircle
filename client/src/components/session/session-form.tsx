@@ -165,7 +165,8 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             <Button
               type="button"
               onClick={onGoal}
-              className="bg-accent text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
+              style={{ backgroundColor: '#0c2576' }}
+              className="text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
             >
               <i className="fas fa-check-circle text-2xl mr-2"></i>
               <span className="text-lg">Goal!</span>
@@ -174,7 +175,8 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             <Button
               type="button"
               onClick={onMiss}
-              className="bg-secondary text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
+              style={{ backgroundColor: '#feef33', color: '#000000' }}
+              className="font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
             >
               <i className="fas fa-times-circle text-2xl mr-2"></i>
               <span className="text-lg">Miss</span>

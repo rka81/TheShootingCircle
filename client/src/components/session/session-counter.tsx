@@ -16,15 +16,15 @@ export const SessionCounter: React.FC<SessionCounterProps> = ({
   return (
     <div className="grid grid-cols-3 gap-3 mb-6">
       <div className="bg-gray-100 p-3 rounded-lg text-center">
-        <div className="text-2xl font-bold mb-1">{totalShots}</div>
+        <div className="text-2xl font-bold text-black mb-1">{totalShots}</div>
         <div className="text-xs text-gray-600">Total Shots</div>
       </div>
-      <div className="bg-accent bg-opacity-10 p-3 rounded-lg text-center">
-        <div className="text-2xl font-bold text-accent mb-1">{scoredShots}</div>
+      <div style={{ backgroundColor: 'rgba(12, 37, 118, 0.1)' }} className="p-3 rounded-lg text-center">
+        <div className="text-2xl font-bold text-black mb-1">{scoredShots}</div>
         <div className="text-xs text-gray-600">Goals</div>
       </div>
-      <div className="bg-secondary bg-opacity-10 p-3 rounded-lg text-center">
-        <div className="text-2xl font-bold text-secondary mb-1">{missedShots}</div>
+      <div style={{ backgroundColor: 'rgba(254, 239, 51, 0.2)' }} className="p-3 rounded-lg text-center">
+        <div className="text-2xl font-bold text-black mb-1">{missedShots}</div>
         <div className="text-xs text-gray-600">Misses</div>
       </div>
     </div>
