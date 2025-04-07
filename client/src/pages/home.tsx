@@ -97,7 +97,7 @@ const HomePage: React.FC<HomePageProps> = ({
 
       {/* Quick Stats */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-        <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Your Shooting Stats</h2>
+        <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Your Shooting Statistics</h2>
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="p-2 rounded-lg bg-gray-50">
             <div className="text-2xl font-bold text-dark">{stats.averageAccuracy}%</div>
