@@ -60,7 +60,8 @@ export const calculateStats = (sessions: Session[]): SessionStats => {
       averageAccuracy: 0,
       highestAccuracy: 0,
       mostGoalsInSession: 0,
-      streakDays: 0
+      streakDays: 0,
+      accuracyTrend: "–"
     };
   }
 
@@ -70,16 +71,26 @@ export const calculateStats = (sessions: Session[]): SessionStats => {
   const averageAccuracy = totalShots > 0 
     ? Math.round((totalScored / totalShots) * 100) 
     : 0;
-  
+
   const highestAccuracy = Math.max(...sessions.map(s => s.accuracy));
   const mostGoalsInSession = Math.max(...sessions.map(s => s.scoredShots));
-  
+
   // Calculate streak (consecutive days with sessions)
   let streakDays = 0;
   if (sessions.length > 0) {
     // This is a simplified streak calculation
     // A more complete implementation would check for actual consecutive calendar days
     streakDays = 1;
+  }
+
+  let accuracyTrend = "–";
+  if (sessions.length > 1) {
+    const previousAccuracy = sessions[sessions.length - 2].accuracy;
+    if (averageAccuracy > previousAccuracy) {
+      accuracyTrend = "↑";
+    } else if (averageAccuracy < previousAccuracy) {
+      accuracyTrend = "↓";
+    }
   }
 
   return {
@@ -89,7 +100,8 @@ export const calculateStats = (sessions: Session[]): SessionStats => {
     averageAccuracy,
     highestAccuracy,
     mostGoalsInSession,
-    streakDays
+    streakDays,
+    accuracyTrend
   };
 };
 
@@ -132,11 +144,11 @@ export const createSession = async (session: InsertSession): Promise<Session> =>
   try {
     const response = await apiRequest('POST', '/api/sessions', session);
     const newSession: Session = await response.json();
-    
+
     // Backup to local storage
     const localSessions = getSessionsFromLocalStorage();
     saveSessionsToLocalStorage([...localSessions, newSession]);
-    
+
     return newSession;
   } catch (error) {
     console.error("Failed to create session on server, saving locally", error);
@@ -155,7 +167,7 @@ export const createSession = async (session: InsertSession): Promise<Session> =>
 // Share session via WhatsApp
 export const shareViaWhatsApp = (session: Session): void => {
   const message = `Check out my netball shooting stats for "${session.name || 'Shooting Practice'}": ${session.scoredShots}/${session.totalShots} shots (${session.accuracy}% accuracy)${session.coachComment ? `\n\nCoach's feedback: ${session.coachComment}` : ''}`;
-  
+
   const encodedMessage = encodeURIComponent(message);
   window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
 };
@@ -164,7 +176,7 @@ export const shareViaWhatsApp = (session: Session): void => {
 export const shareViaEmail = (session: Session): void => {
   const subject = `Netball Shooting Stats: ${session.name || 'Shooting Practice'}`;
   const body = `My shooting stats for "${session.name || 'Shooting Practice'}":\n\nTotal Shots: ${session.totalShots}\nGoals: ${session.scoredShots}\nMisses: ${session.missedShots}\nAccuracy: ${session.accuracy}%${session.coachComment ? `\n\nCoach's feedback: ${session.coachComment}` : ''}`;
-  
+
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
   window.open(`mailto:?subject=${encodedSubject}&body=${encodedBody}`, '_blank');

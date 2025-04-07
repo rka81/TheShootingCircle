@@ -100,7 +100,18 @@ const HomePage: React.FC<HomePageProps> = ({
         <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Your Shooting Statistics</h2>
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="p-2 rounded-lg bg-gray-50">
-            <div className="text-2xl font-bold text-dark">{stats.averageAccuracy}%</div>
+            <div className="flex items-center gap-1">
+              <div className="text-2xl font-bold text-dark">{stats.averageAccuracy}%</div>
+              {stats.accuracyTrend > 0 && (
+                <span className="text-green-500" title="Improved from last session">↑</span>
+              )}
+              {stats.accuracyTrend < 0 && (
+                <span className="text-red-500" title="Decreased from last session">↓</span>
+              )}
+              {stats.accuracyTrend === 0 && (
+                <span className="text-gray-400" title="No change or insufficient data">–</span>
+              )}
+            </div>
             <div className="text-xs text-gray-500">Accuracy</div>
           </div>
           <div className="p-2 rounded-lg bg-gray-50">

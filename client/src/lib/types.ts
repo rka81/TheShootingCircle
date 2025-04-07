@@ -8,6 +8,7 @@ export interface SessionStats {
   highestAccuracy: number;
   mostGoalsInSession: number;
   streakDays: number;
+  accuracyTrend: number;
 }
 
 export type NavPage = 'home' | 'newSession' | 'history' | 'stats';
