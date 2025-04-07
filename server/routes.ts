@@ -72,6 +72,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertSessionSchema.parse(req.body);
       const session = await storage.createSession(validatedData);
+
+      // Check for active challenge and create attempt if criteria met
+      const activeChallenge = await storage.getActiveChallenge();
+      if (activeChallenge) {
+        const isCompleted = 
+          session.totalShots >= activeChallenge.goalCount && 
+          session.accuracy >= activeChallenge.goalAccuracy;
+
+        await storage.createChallengeAttempt({
+          challengeId: activeChallenge.id,
+          sessionId: session.id,
+          sessionAccuracy: session.accuracy,
+          completed: isCompleted
+        });
+      }
+
       res.status(201).json(session);
     } catch (error) {
       if (error instanceof z.ZodError) {
