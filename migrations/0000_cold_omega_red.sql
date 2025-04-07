@@ -1,11 +1,12 @@
 
--- Drop existing tables in correct dependency order
-DROP TABLE IF EXISTS challenge_attempts CASCADE;
-DROP TABLE IF EXISTS challenges CASCADE;
-DROP TABLE IF EXISTS sessions CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
+DO $$ 
+BEGIN
+    DROP TABLE IF EXISTS challenge_attempts CASCADE;
+    DROP TABLE IF EXISTS challenges CASCADE;
+    DROP TABLE IF EXISTS sessions CASCADE;
+    DROP TABLE IF EXISTS users CASCADE;
+END $$;
 
--- Create tables in correct order
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
