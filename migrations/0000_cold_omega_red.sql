@@ -1,12 +1,11 @@
 
-DO $$ 
-BEGIN
-    DROP TABLE IF EXISTS challenge_attempts CASCADE;
-    DROP TABLE IF EXISTS challenges CASCADE;
-    DROP TABLE IF EXISTS sessions CASCADE;
-    DROP TABLE IF EXISTS users CASCADE;
-END $$;
+-- Drop existing tables
+DROP TABLE IF EXISTS challenge_attempts CASCADE;
+DROP TABLE IF EXISTS challenges CASCADE;
+DROP TABLE IF EXISTS sessions CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
 
+-- Create tables
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
@@ -40,9 +39,11 @@ CREATE TABLE challenges (
 
 CREATE TABLE challenge_attempts (
     id SERIAL PRIMARY KEY,
-    challenge_id INTEGER NOT NULL REFERENCES challenges(id),
-    session_id INTEGER NOT NULL REFERENCES sessions(id),
+    challenge_id INTEGER NOT NULL,
+    session_id INTEGER NOT NULL,
     accuracy INTEGER NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    FOREIGN KEY (challenge_id) REFERENCES challenges(id),
+    FOREIGN KEY (session_id) REFERENCES sessions(id)
 );
