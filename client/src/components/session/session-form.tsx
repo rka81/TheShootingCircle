@@ -256,10 +256,10 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             name="coachComment"
             render={({ field }) => (
               <FormItem className="mb-6">
-                <FormLabel className="block text-sm font-bold text-brentwood-blue mb-1">Coach Comments (Optional)</FormLabel>
+                <FormLabel className="block text-sm font-bold text-brentwood-blue mb-1">Comments</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Any feedback or notes from your coach"
+                    placeholder="Add any feedback or notes from this session"
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                     rows={2}
                     {...field}
