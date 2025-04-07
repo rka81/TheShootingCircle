@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { ensureActiveChallenge } from "./challenge-manager";
 import { z } from "zod";
 import { 
   sessions,
@@ -140,10 +141,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get current active challenge
   app.get("/api/challenges/active", async (req, res) => {
     try {
-      const challenge = await storage.getActiveChallenge();
-      if (!challenge) {
-        return res.status(404).json({ message: "No active challenge found" });
-      }
+      const challenge = await ensureActiveChallenge();
       res.json(challenge);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch active challenge" });
