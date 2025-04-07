@@ -7,9 +7,17 @@ import { Button } from "../ui/button";
 import type { Challenge } from "@shared/schema";
 
 export const WeeklyChallenge: React.FC = () => {
-  const { data: activeChallenge } = useQuery<Challenge>({
+  const { data: activeChallenge, isLoading } = useQuery<Challenge>({
     queryKey: ['/api/challenges/active'],
   });
+
+  if (isLoading) {
+    return (
+      <Card className="p-4 mb-6 animate-pulse">
+        <h3 className="text-lg font-bold text-brentwood-blue mb-2">Loading...</h3>
+      </Card>
+    );
+  }
 
   if (!activeChallenge) {
     return null;
@@ -34,9 +42,9 @@ export const WeeklyChallenge: React.FC = () => {
         </div>
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium">
-            Difficulty: {activeChallenge.difficulty}
+            Required Accuracy: {activeChallenge.goalAccuracy}%
           </span>
-          <Button variant="outline" size="sm">View Leaderboard</Button>
+          <Button variant="outline" size="sm">View Details</Button>
         </div>
       </div>
     </Card>
