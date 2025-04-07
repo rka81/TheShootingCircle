@@ -203,7 +203,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="">Choose a drill</SelectItem>
+                    <SelectItem value="custom">Choose a drill</SelectItem>
                     {presetDrills.map((drill) => (
                       <SelectItem key={drill.id} value={drill.id}>
                         {drill.name}
