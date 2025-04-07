@@ -63,8 +63,9 @@ export const WeeklyChallenge: React.FC = () => {
             variant="outline" 
             size="sm" 
             className="hover:bg-brentwood-blue hover:text-white"
+            onClick={() => onNavigate("newSession")}
           >
-            View Details
+            Take Challenge
           </Button>
         </div>
       </div>
