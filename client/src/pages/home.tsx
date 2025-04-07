@@ -123,6 +123,18 @@ const HomePage: React.FC<HomePageProps> = ({
         New Shooting Session
       </Button>
 
+      {/* Your Achievements */}
+      <AchievementGrid achievements={achievements} />
+
+      {/* Weekly Challenge */}
+      <WeeklyChallenge onNavigate={onNavigate} />
+
+      {/* Weekly Progress */}
+      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Weekly Progress</h2>
+        <WeeklyProgressChart sessions={sessions || []} />
+      </div>
+
       {/* Recent Sessions */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-3">
@@ -146,14 +158,6 @@ const HomePage: React.FC<HomePageProps> = ({
         )}
       </div>
 
-      {/* Weekly Progress */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-        <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Weekly Progress</h2>
-        <WeeklyProgressChart sessions={sessions || []} />
-      </div>
-
-      <AchievementGrid achievements={achievements} />
-      <WeeklyChallenge onNavigate={onNavigate} />
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
         {/* Leaderboard would go here */}
       </div>
