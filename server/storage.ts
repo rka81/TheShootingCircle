@@ -90,10 +90,6 @@ export class DatabaseStorage implements IStorage {
     return result.length > 0;
   }
 
-  async deleteAllSessions(): Promise<void> {
-    await db.delete(sessions).execute();
-  }
-
   // Challenge methods
   async getChallenges(): Promise<Challenge[]> {
     return db.select().from(challenges).orderBy(desc(challenges.createdAt));
