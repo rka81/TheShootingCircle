@@ -1,6 +1,5 @@
 
 import type { InsertChallenge } from "@shared/schema";
-
 export const presetChallenges: Omit<InsertChallenge, "startDate" | "endDate">[] = [
   {
     title: "Perfect Ten",
