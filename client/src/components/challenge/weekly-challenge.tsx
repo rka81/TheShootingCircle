@@ -4,14 +4,19 @@ import { useQuery } from "@tanstack/react-query";
 import { Card } from "../ui/card";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
-import type { Challenge } from "@shared/schema";
+import type { Challenge, ChallengeAttempt } from "@shared/schema";
 
 export const WeeklyChallenge: React.FC = () => {
-  const { data: activeChallenge, isLoading } = useQuery<Challenge>({
+  const { data: activeChallenge, isLoading: challengeLoading } = useQuery<Challenge>({
     queryKey: ['/api/challenges/active'],
   });
 
-  if (isLoading) {
+  const { data: attempts } = useQuery<ChallengeAttempt[]>({
+    queryKey: ['/api/challenge-attempts', activeChallenge?.id],
+    enabled: !!activeChallenge,
+  });
+
+  if (challengeLoading) {
     return (
       <Card className="p-4 mb-6 animate-pulse">
         <h3 className="text-lg font-bold text-brentwood-blue mb-2">Loading...</h3>
@@ -23,7 +28,17 @@ export const WeeklyChallenge: React.FC = () => {
     return null;
   }
 
-  const daysLeft = Math.ceil((new Date(activeChallenge.endDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+  // Calculate days remaining
+  const daysLeft = Math.ceil(
+    (new Date(activeChallenge.endDate).getTime() - new Date().getTime()) / 
+    (1000 * 60 * 60 * 24)
+  );
+
+  // Calculate progress based on attempts
+  const latestAttempt = attempts?.[0];
+  const progress = latestAttempt ? 
+    Math.min((latestAttempt.sessionAccuracy / activeChallenge.goalAccuracy) * 100, 100) : 
+    0;
 
   return (
     <Card className="p-4 mb-6">
@@ -38,13 +53,19 @@ export const WeeklyChallenge: React.FC = () => {
             <span>Goal: {activeChallenge.goalCount} shots</span>
             <span>{daysLeft} days left</span>
           </div>
-          <Progress value={0} className="h-2" />
+          <Progress value={progress} className="h-2" />
         </div>
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium">
             Required Accuracy: {activeChallenge.goalAccuracy}%
           </span>
-          <Button variant="outline" size="sm">View Details</Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="hover:bg-brentwood-blue hover:text-white"
+          >
+            View Details
+          </Button>
         </div>
       </div>
     </Card>

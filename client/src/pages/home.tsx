@@ -7,6 +7,7 @@ import { ProfileBanner } from "@/components/navigation/header";
 import SessionCard from "@/components/session/session-card";
 import { WeeklyProgressChart } from "@/components/stats/stats-chart";
 import { AchievementGrid } from "@/components/stats/achievement-badge";
+import { WeeklyChallenge } from "@/components/challenge/weekly-challenge";
 import { 
   calculateStats, 
   getAchievements, 
@@ -21,14 +22,7 @@ interface HomePageProps {
   showProfile: boolean;
 }
 
-const WeeklyChallenge = () => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-      <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Weekly Challenge</h2>
-      <p>Placeholder for Weekly Challenge content</p>
-    </div>
-  );
-};
+
 
 const HomePage: React.FC<HomePageProps> = ({ 
   onNavigate, 
