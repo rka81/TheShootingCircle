@@ -6,7 +6,11 @@ import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
 import type { Challenge, ChallengeAttempt } from "@shared/schema";
 
-export const WeeklyChallenge: React.FC = () => {
+export interface WeeklyChallengeProps {
+  onNavigate: (page: NavPage) => void;
+}
+
+const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) => {
   const { data: activeChallenge, isLoading: challengeLoading } = useQuery<Challenge>({
     queryKey: ['/api/challenges/active'],
   });

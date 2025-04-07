@@ -153,7 +153,7 @@ const HomePage: React.FC<HomePageProps> = ({
       </div>
 
       <AchievementGrid achievements={achievements} />
-      <WeeklyChallenge />
+      <WeeklyChallenge onNavigate={onNavigate} />
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
         {/* Leaderboard would go here */}
       </div>
