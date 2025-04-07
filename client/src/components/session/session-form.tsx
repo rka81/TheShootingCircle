@@ -13,6 +13,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { SessionCounter, AccuracyBar } from "./session-counter";
 import { shareViaWhatsApp, shareViaEmail } from "@/lib/storage";
 
@@ -25,6 +32,7 @@ const sessionFormSchema = z.object({
   accuracy: z.number().min(0).max(100),
   playerName: z.string().optional(),
   coachComment: z.string().optional(),
+  drill: z.string().optional(),
 });
 
 type SessionFormValues = z.infer<typeof sessionFormSchema>;
@@ -41,6 +49,15 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
   const [accuracy, setAccuracy] = useState(0);
   const [isPending, setIsPending] = useState(false);
 
+  // Define preset drills
+  const presetDrills = [
+    { id: "10-each-post", name: "10 from each post corner" },
+    { id: "center-circle", name: "Center circle (20 shots)" },
+    { id: "moving-shots", name: "Moving shots across circle" },
+    { id: "pressure-drill", name: "Pressure shooting (with timer)" },
+    { id: "baseline-shots", name: "Baseline shots (10 left, 10 right)" }
+  ];
+
   const form = useForm<SessionFormValues>({
     resolver: zodResolver(sessionFormSchema),
     defaultValues: {
@@ -50,7 +67,8 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
       missedShots: 0,
       accuracy: 0,
       playerName: "",
-      coachComment: ""
+      coachComment: "",
+      drill: ""
     }
   });
 
@@ -136,7 +154,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
   return (
     <div className="bg-white rounded-lg shadow-md p-5 mb-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold" style={{ color: '#0c2576' }}>
+        <h2 className="text-xl font-bold text-brentwood-blue">
           The Shooting Circle
           <span className="block text-sm text-gray-600 font-normal mt-1">New Practice Session</span>
         </h2>
@@ -155,7 +173,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             name="name"
             render={({ field }) => (
               <FormItem className="mb-4">
-                <FormLabel className="block text-sm font-medium text-gray-700 mb-1">Session Name</FormLabel>
+                <FormLabel className="block text-sm font-bold text-brentwood-blue mb-1">Session Name</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="E.g. After School Practice"
@@ -163,6 +181,39 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
                     {...field}
                   />
                 </FormControl>
+              </FormItem>
+            )}
+          />
+          
+          {/* Preset Drills */}
+          <FormField
+            control={form.control}
+            name="drill"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormLabel className="block text-sm font-bold text-brentwood-blue mb-1">Training Drill (Optional)</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value || ""}
+                  value={field.value || ""}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-full p-3 border border-gray-300 rounded-lg">
+                      <SelectValue placeholder="Select a preset training drill" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="">Choose a drill</SelectItem>
+                    {presetDrills.map((drill) => (
+                      <SelectItem key={drill.id} value={drill.id}>
+                        {drill.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <div className="text-xs text-gray-500 mt-1">
+                  Select a preset drill or create your own custom session
+                </div>
               </FormItem>
             )}
           />
@@ -183,8 +234,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             <Button
               type="button"
               onClick={onGoal}
-              style={{ backgroundColor: '#0c2576' }}
-              className="text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
+              className="bg-brentwood-blue text-white font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
             >
               <i className="fas fa-check-circle text-2xl mr-2"></i>
               <span className="text-lg">Goal!</span>
@@ -193,8 +243,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             <Button
               type="button"
               onClick={onMiss}
-              style={{ backgroundColor: '#feef33', color: '#000000' }}
-              className="font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
+              className="bg-brentwood-yellow text-black font-bold py-4 px-6 rounded-lg shadow-md flex items-center justify-center h-16"
             >
               <i className="fas fa-times-circle text-2xl mr-2"></i>
               <span className="text-lg">Miss</span>
@@ -207,7 +256,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             name="coachComment"
             render={({ field }) => (
               <FormItem className="mb-6">
-                <FormLabel className="block text-sm font-medium text-gray-700 mb-1">Coach Comments (Optional)</FormLabel>
+                <FormLabel className="block text-sm font-bold text-brentwood-blue mb-1">Coach Comments (Optional)</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Any feedback or notes from your coach"
@@ -224,7 +273,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
           <div className="flex flex-col gap-3">
             <Button 
               type="submit"
-              className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors"
+              className="w-full bg-brentwood-blue hover:opacity-90 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors"
               disabled={isPending}
             >
               {isPending ? "Saving..." : "Save Session"}
@@ -243,8 +292,7 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
               <Button
                 type="button"
                 onClick={() => shareSession('email')}
-                style={{ backgroundColor: '#0c2576' }}
-                className="text-white font-medium py-2 px-4 rounded-lg shadow-sm flex items-center justify-center"
+                className="bg-brentwood-blue text-white font-medium py-2 px-4 rounded-lg shadow-sm flex items-center justify-center"
               >
                 <i className="fas fa-envelope mr-2"></i>
                 Share via Email

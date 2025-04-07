@@ -29,11 +29,11 @@ const SessionCard: React.FC<SessionCardProps> = ({
   };
 
   return (
-    <Card className={`bg-white rounded-lg shadow-sm mb-3 p-4 ${borderColorClass}`}>
+    <Card className={`bg-white rounded-lg shadow-sm mb-3 p-4`}>
       <CardContent className="p-0">
         <div className="flex justify-between items-start mb-2">
           <div>
-            <h3 className="font-semibold">{session.name || "Shooting Practice"}</h3>
+            <h3 className="font-semibold text-brentwood-blue">{session.name || "Shooting Practice"}</h3>
             <p className="text-xs text-gray-500">{formattedDate}</p>
           </div>
           <div className="text-right">
@@ -47,7 +47,7 @@ const SessionCard: React.FC<SessionCardProps> = ({
         </div>
         
         {(session.coachComment || showActions) && (
-          <div className="pt-2 border-t border-gray-100">
+          <div className="pt-2">
             <div className="flex justify-between">
               <div className="text-xs text-gray-500">
                 {session.coachComment ? (
@@ -66,7 +66,7 @@ const SessionCard: React.FC<SessionCardProps> = ({
               {showActions && (
                 <div className="flex space-x-2">
                   <button 
-                    className="text-gray-400 hover:text-primary"
+                    className="text-gray-400 hover:text-brentwood-blue"
                     onClick={() => handleShare('whatsapp')}
                   >
                     <i className="fas fa-share-alt"></i>

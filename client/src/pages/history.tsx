@@ -80,7 +80,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ onNavigate }) => {
   if (isLoading) {
     return (
       <div className="container mx-auto p-4 pb-20">
-        <h2 className="text-xl font-bold text-primary mb-4">Session History</h2>
+        <h2 className="text-xl font-bold text-brentwood-blue mb-4">Session History</h2>
         <div className="flex items-center justify-between mb-4">
           <Skeleton className="h-10 w-32" />
           <Skeleton className="h-10 w-20" />
@@ -95,12 +95,12 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ onNavigate }) => {
   if (error) {
     return (
       <div className="container mx-auto p-4 pb-20">
-        <h2 className="text-xl font-bold text-primary mb-4">Session History</h2>
+        <h2 className="text-xl font-bold text-brentwood-blue mb-4">Session History</h2>
         <div className="bg-white rounded-lg shadow-md p-4 mb-6 text-center">
           <p className="text-gray-700 mb-3">There was a problem loading your history.</p>
           <Button 
             onClick={() => window.location.reload()}
-            className="bg-primary text-white"
+            className="bg-brentwood-blue text-white"
           >
             Retry
           </Button>
@@ -112,7 +112,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ onNavigate }) => {
   return (
     <div className="container mx-auto p-4 pb-20">
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-primary mb-4">Session History</h2>
+        <h2 className="text-xl font-bold text-brentwood-blue mb-4">Session History</h2>
         
         {/* Filter Controls */}
         <div className="flex items-center justify-between mb-4">
@@ -134,7 +134,7 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ onNavigate }) => {
           <Button
             onClick={() => onNavigate("home")}
             variant="ghost"
-            className="text-primary font-medium flex items-center"
+            className="text-brentwood-blue font-medium flex items-center"
           >
             <i className="fas fa-arrow-left mr-1"></i> Back
           </Button>

@@ -13,6 +13,9 @@ export default {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        'brentwood-blue': '#0c2576',
+        'brentwood-yellow': '#feef33',
+        'light-blue': '#265cb5',
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",

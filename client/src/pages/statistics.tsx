@@ -31,7 +31,7 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ onNavigate }) => {
   if (isLoading) {
     return (
       <div className="container mx-auto p-4 pb-20">
-        <h2 className="text-xl font-bold text-primary mb-4">My Statistics</h2>
+        <h2 className="text-xl font-bold text-brentwood-blue mb-4">My Statistics</h2>
         <Skeleton className="h-56 w-full mb-6" />
         <div className="grid grid-cols-2 gap-4 mb-6">
           <Skeleton className="h-40 w-full" />
@@ -45,12 +45,12 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ onNavigate }) => {
   if (error) {
     return (
       <div className="container mx-auto p-4 pb-20">
-        <h2 className="text-xl font-bold text-primary mb-4">My Statistics</h2>
+        <h2 className="text-xl font-bold text-brentwood-blue mb-4">My Statistics</h2>
         <div className="bg-white rounded-lg shadow-md p-4 mb-6 text-center">
           <p className="text-gray-700 mb-3">There was a problem loading your statistics.</p>
           <Button 
             onClick={() => window.location.reload()}
-            className="bg-primary text-white"
+            className="bg-brentwood-blue text-white"
           >
             Retry
           </Button>
@@ -62,16 +62,16 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ onNavigate }) => {
   return (
     <div className="container mx-auto p-4 pb-20">
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-primary mb-4">My Statistics</h2>
+        <h2 className="text-xl font-bold text-brentwood-blue mb-4">My Statistics</h2>
         
         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-          <h3 className="text-lg font-semibold mb-3">Shooting Accuracy Trend</h3>
+          <h3 className="text-lg font-bold mb-3 text-brentwood-blue">Shooting Accuracy Trend</h3>
           <AccuracyTrendChart sessions={sessions || []} />
         </div>
         
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="text-md font-semibold mb-2">Personal Bests</h3>
+            <h3 className="text-md font-bold mb-2 text-brentwood-blue">Personal Bests</h3>
             <ul className="space-y-2">
               <li className="flex justify-between">
                 <span className="text-sm text-gray-600">Highest Accuracy:</span>
@@ -89,7 +89,7 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ onNavigate }) => {
           </div>
           
           <div className="bg-white rounded-lg shadow-md p-4">
-            <h3 className="text-md font-semibold mb-2">Overall Stats</h3>
+            <h3 className="text-md font-bold mb-2 text-brentwood-blue">Overall Stats</h3>
             <ul className="space-y-2">
               <li className="flex justify-between">
                 <span className="text-sm text-gray-600">Total Sessions:</span>
@@ -108,13 +108,13 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ onNavigate }) => {
         </div>
         
         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-          <h3 className="text-lg font-semibold mb-3">Monthly Progress</h3>
+          <h3 className="text-lg font-bold mb-3 text-brentwood-blue">Monthly Progress</h3>
           <MonthlyChart sessions={sessions || []} />
         </div>
         
         <Button
           onClick={() => onNavigate("home")}
-          className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg shadow-md mb-6 flex items-center justify-center transition-colors"
+          className="w-full bg-brentwood-blue hover:bg-brentwood-blue/90 text-white font-medium py-3 px-4 rounded-lg shadow-md mb-6 flex items-center justify-center transition-colors"
         >
           <i className="fas fa-arrow-left mr-2"></i>
           Back to Home

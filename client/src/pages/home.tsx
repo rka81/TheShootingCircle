@@ -56,7 +56,7 @@ const HomePage: React.FC<HomePageProps> = ({
       <div className="container mx-auto p-4 pb-20">
         <ProfileBanner profileData={profileData} visible={showProfile} />
         <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-          <h2 className="text-lg font-semibold mb-3 text-primary">Your Shooting Stats</h2>
+          <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Your Shooting Stats</h2>
           <div className="flex justify-between gap-2">
             <Skeleton className="h-16 w-full" />
             <Skeleton className="h-16 w-full" />
@@ -74,11 +74,11 @@ const HomePage: React.FC<HomePageProps> = ({
     return (
       <div className="container mx-auto p-4 pb-20">
         <div className="bg-white rounded-lg shadow-md p-4 mb-6 text-center">
-          <h2 className="text-lg font-semibold mb-3 text-primary">Error Loading Data</h2>
+          <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Error Loading Data</h2>
           <p className="text-gray-700 mb-3">There was a problem loading your data.</p>
           <Button 
             onClick={() => window.location.reload()}
-            className="bg-primary text-white"
+            className="bg-brentwood-blue text-white"
           >
             Retry
           </Button>
@@ -94,7 +94,7 @@ const HomePage: React.FC<HomePageProps> = ({
 
       {/* Quick Stats */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-        <h2 className="text-lg font-semibold mb-3 text-primary">Your Shooting Stats</h2>
+        <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Your Shooting Stats</h2>
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className="p-2 rounded-lg bg-gray-50">
             <div className="text-2xl font-bold text-dark">{stats.averageAccuracy}%</div>
@@ -114,7 +114,7 @@ const HomePage: React.FC<HomePageProps> = ({
       {/* New Session Button */}
       <Button 
         onClick={() => onNavigate("newSession")}
-        className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-4 rounded-lg shadow-md mb-6 flex items-center justify-center transition-colors h-14"
+        className="w-full bg-brentwood-blue hover:bg-brentwood-blue/90 text-white font-bold py-4 px-4 rounded-lg shadow-md mb-6 flex items-center justify-center transition-colors h-14"
       >
         <i className="fas fa-plus-circle mr-2"></i>
         New Shooting Session
@@ -123,10 +123,10 @@ const HomePage: React.FC<HomePageProps> = ({
       {/* Recent Sessions */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-3">
-          <h2 className="text-lg font-semibold text-primary">Recent Sessions</h2>
+          <h2 className="text-lg font-bold text-brentwood-blue">Recent Sessions</h2>
           <button 
             onClick={() => onNavigate("history")}
-            className="text-sm text-primary font-medium"
+            className="text-sm text-brentwood-blue font-medium"
           >
             View All
           </button>
@@ -145,7 +145,7 @@ const HomePage: React.FC<HomePageProps> = ({
 
       {/* Weekly Progress */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-        <h2 className="text-lg font-semibold mb-3 text-primary">Weekly Progress</h2>
+        <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Weekly Progress</h2>
         <WeeklyProgressChart sessions={sessions || []} />
       </div>
 
