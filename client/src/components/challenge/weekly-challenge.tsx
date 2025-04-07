@@ -44,8 +44,10 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
     Math.min((latestAttempt.sessionAccuracy / activeChallenge.goalAccuracy) * 100, 100) : 
     0;
 
-  // Check if challenge is completed
-  const isCompleted = latestAttempt?.completed || false;
+  // Check if challenge is completed based on latest attempt's accuracy
+  const isCompleted = latestAttempt ? 
+    latestAttempt.sessionAccuracy >= activeChallenge.goalAccuracy : 
+    false;
 
   // Apply styles based on completion
   const buttonStyles = isCompleted 
