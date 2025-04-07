@@ -15,7 +15,6 @@ const BottomNav: React.FC<BottomNavProps> = ({ currentPage, onPageChange }) => {
   ];
 
   const activeColor = '#0c2576'; // Brentwood Blue
-  const activeBackgroundColor = 'rgba(254, 239, 51, 0.2)'; // Brentwood Yellow (transparent)
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg">
@@ -30,8 +29,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ currentPage, onPageChange }) => {
                 isActive ? "font-semibold" : "text-gray-500"
               }`}
               style={{
-                color: isActive ? activeColor : undefined,
-                backgroundColor: isActive ? activeBackgroundColor : undefined
+                color: isActive ? activeColor : undefined
               }}
             >
               <i className={`fas ${item.icon} text-xl`}></i>
