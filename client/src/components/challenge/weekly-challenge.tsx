@@ -10,7 +10,7 @@ export interface WeeklyChallengeProps {
   onNavigate: (page: NavPage) => void;
 }
 
-const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) => {
+export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) => {
   const { data: activeChallenge, isLoading: challengeLoading } = useQuery<Challenge>({
     queryKey: ['/api/challenges/active'],
   });
