@@ -1,9 +1,10 @@
+
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "../ui/card";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
-import type { Challenge, ChallengeAttempt } from "@shared/schema";
+import type { Challenge, Session } from "@shared/schema";
 
 export interface WeeklyChallengeProps {
   onNavigate: (page: NavPage) => void;
@@ -14,8 +15,8 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
     queryKey: ['/api/challenges/active'],
   });
 
-  const { data: attempts } = useQuery<ChallengeAttempt[]>({
-    queryKey: ['/api/challenge-attempts', activeChallenge?.id],
+  const { data: sessions } = useQuery<Session[]>({
+    queryKey: ['/api/sessions'],
     enabled: !!activeChallenge,
   });
 
@@ -27,7 +28,7 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
     );
   }
 
-  if (!activeChallenge) {
+  if (!activeChallenge || !sessions) {
     return null;
   }
 
@@ -37,21 +38,23 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
     (1000 * 60 * 60 * 24)
   );
 
-  // Get latest attempt
-  const latestAttempt = attempts?.[0];
+  // Get sessions within the challenge period
+  const challengeSessions = sessions.filter(session => 
+    new Date(session.createdAt) >= new Date(activeChallenge.startDate) &&
+    new Date(session.createdAt) <= new Date(activeChallenge.endDate)
+  );
 
-  // Get accuracy from the latest attempt's linked session
-  const attemptAccuracy = latestAttempt?.accuracy || 0;
-  const goalAccuracy = activeChallenge.goalAccuracy;
+  // Get the best session that meets the accuracy requirement
+  const bestSession = challengeSessions
+    .filter(session => session.totalShots >= activeChallenge.goalCount)
+    .sort((a, b) => b.accuracy - a.accuracy)[0];
 
-  console.log('Latest Attempt:', latestAttempt);
-  console.log('Attempt Accuracy:', attemptAccuracy);
-  console.log('Goal Accuracy:', goalAccuracy);
-  
-  const isCompleted = attemptAccuracy >= goalAccuracy;
+  const isCompleted = bestSession?.accuracy >= activeChallenge.goalAccuracy;
 
-  // Calculate progress for progress bar
-  const progress = isCompleted ? 100 : 0;
+  // Calculate progress based on best qualifying session
+  const progress = bestSession 
+    ? Math.min((bestSession.accuracy / activeChallenge.goalAccuracy) * 100, 100)
+    : 0;
 
   // Apply styles based on completion
   const buttonStyles = isCompleted 
@@ -76,6 +79,7 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium">
             Required Accuracy: {activeChallenge.goalAccuracy}%
+            {bestSession && ` (Best: ${bestSession.accuracy}%)`}
           </span>
           <Button 
             variant={isCompleted ? "default" : "outline"}
