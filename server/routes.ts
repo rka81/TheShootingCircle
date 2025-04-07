@@ -84,7 +84,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           await storage.createChallengeAttempt({
             challengeId: activeChallenge.id,
             sessionId: session.id,
-            sessionAccuracy: session.accuracy,
+            accuracy: session.accuracy,
             completed: isCompleted
           });
         } catch (error) {

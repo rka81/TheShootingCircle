@@ -41,7 +41,7 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
   const latestAttempt = attempts?.[0];
 
   // Get accuracy from the latest attempt's linked session
-  const attemptAccuracy = latestAttempt?.sessionAccuracy || 0;
+  const attemptAccuracy = latestAttempt?.accuracy || 0;
   const goalAccuracy = activeChallenge.goalAccuracy;
 
   console.log('Latest Attempt:', latestAttempt);
