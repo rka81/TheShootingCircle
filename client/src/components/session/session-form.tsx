@@ -250,6 +250,17 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
             </Button>
           </div>
           
+          {/* Save Button */}
+          <div className="mb-6">
+            <Button 
+              type="submit"
+              className="w-full bg-brentwood-blue hover:opacity-90 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors"
+              disabled={isPending}
+            >
+              {isPending ? "Saving..." : "Save Session"}
+            </Button>
+          </div>
+
           {/* Coach Comments */}
           <FormField
             control={form.control}
@@ -268,37 +279,6 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
               </FormItem>
             )}
           />
-          
-          {/* Submit Buttons */}
-          <div className="flex flex-col gap-3">
-            <Button 
-              type="submit"
-              className="w-full bg-brentwood-blue hover:opacity-90 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-colors"
-              disabled={isPending}
-            >
-              {isPending ? "Saving..." : "Save Session"}
-            </Button>
-            
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                type="button"
-                onClick={() => shareSession('whatsapp')}
-                className="bg-[#25D366] text-white font-medium py-2 px-4 rounded-lg shadow-sm flex items-center justify-center"
-              >
-                <i className="fab fa-whatsapp mr-2"></i>
-                Share via WhatsApp
-              </Button>
-              
-              <Button
-                type="button"
-                onClick={() => shareSession('email')}
-                className="bg-brentwood-blue text-white font-medium py-2 px-4 rounded-lg shadow-sm flex items-center justify-center"
-              >
-                <i className="fas fa-envelope mr-2"></i>
-                Share via Email
-              </Button>
-            </div>
-          </div>
         </form>
       </Form>
     </div>
