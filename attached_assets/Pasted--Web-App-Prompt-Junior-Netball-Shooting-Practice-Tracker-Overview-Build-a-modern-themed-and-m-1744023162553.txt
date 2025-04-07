@@ -1,0 +1,80 @@
+🎯 Web App Prompt: Junior Netball Shooting Practice Tracker
+Overview: Build a modern, themed, and mobile-friendly web app designed for junior netball players to track their shooting practice. The app should be intuitive and visually engaging, appealing to younger users, while also functional for coaches to monitor progress and provide feedback.
+
+🌟 Core Features Required:
+User Interface & Design
+
+Modern and netball-themed design (club branding optional).
+
+Clean, easy-to-use interface suitable for junior users (ages 8–16).
+
+Responsive layout for mobile and tablet use.
+
+Shot Tracking Functionality
+
+Input fields/buttons to record:
+
+Total shots taken
+
+Successful goals scored
+
+Missed shots (auto-calculated or manual)
+
+Auto-calculation of shooting accuracy percentage (%)
+
+Session Logging
+
+Each entry should save with:
+
+Date and time stamp
+
+Optional session name (e.g., "Home Practice", "Drills with Coach", etc.)
+
+Results History
+
+Log of previous shooting sessions (sortable by date)
+
+Visual indicators or charts to show shooting progress over time
+
+Sharing Options
+
+WhatsApp and Email sharing buttons that allow users to send:
+
+A summary of their latest session or a selected log
+
+Include option for coach comments/feedback to be added to the log (basic text box or form submission)
+
+💡 Optional & Recommended Additions:
+User Profiles or Session Tags
+
+Optional player name/initials for multi-user use on same device
+
+Coach Portal / Admin Mode
+
+Login-protected area where coaches can:
+
+View player-submitted logs
+
+Add feedback/comments to individual sessions
+
+Gamification Elements
+
+Badges or stars for consistency, improvement streaks, etc.
+
+Weekly leaderboard (optional)
+
+Analytics Summary
+
+Display personal bests, average accuracy, session count
+
+Drill Mode
+
+Include preset training drills (e.g., “10 from each post corner”) with quick tracking options
+
+🔐 Privacy and Simplicity:
+No login required for players
+
+Simple local storage or minimal database (e.g., Firebase) to keep things lightweight
+
+Clear option to delete or edit logs if needed
+
