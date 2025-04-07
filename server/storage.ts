@@ -1,4 +1,6 @@
 import { users, type User, type InsertUser, sessions, type Session, type InsertSession } from "@shared/schema";
+import { db } from "./db";
+import { eq, desc } from "drizzle-orm";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -16,65 +18,59 @@ export interface IStorage {
   deleteSession(id: number): Promise<boolean>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private sessions: Map<number, Session>;
-  private userCurrentId: number;
-  private sessionCurrentId: number;
-
-  constructor() {
-    this.users = new Map();
-    this.sessions = new Map();
-    this.userCurrentId = 1;
-    this.sessionCurrentId = 1;
-  }
-
+export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    const id = this.userCurrentId++;
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
+    const [user] = await db
+      .insert(users)
+      .values(insertUser)
+      .returning();
     return user;
   }
 
   async getSessions(): Promise<Session[]> {
-    return Array.from(this.sessions.values())
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    return db.select().from(sessions).orderBy(desc(sessions.createdAt));
   }
 
   async getSession(id: number): Promise<Session | undefined> {
-    return this.sessions.get(id);
+    const [session] = await db.select().from(sessions).where(eq(sessions.id, id));
+    return session || undefined;
   }
 
   async createSession(insertSession: InsertSession): Promise<Session> {
-    const id = this.sessionCurrentId++;
-    const createdAt = new Date();
-    const session: Session = { ...insertSession, id, createdAt };
-    this.sessions.set(id, session);
+    const [session] = await db
+      .insert(sessions)
+      .values(insertSession)
+      .returning();
     return session;
   }
 
   async updateSession(id: number, sessionUpdate: Partial<InsertSession>): Promise<Session | undefined> {
-    const session = this.sessions.get(id);
-    if (!session) return undefined;
-
-    const updatedSession: Session = { ...session, ...sessionUpdate };
-    this.sessions.set(id, updatedSession);
-    return updatedSession;
+    const [updatedSession] = await db
+      .update(sessions)
+      .set(sessionUpdate)
+      .where(eq(sessions.id, id))
+      .returning();
+    return updatedSession || undefined;
   }
 
   async deleteSession(id: number): Promise<boolean> {
-    return this.sessions.delete(id);
+    const result = await db
+      .delete(sessions)
+      .where(eq(sessions.id, id))
+      .returning({ id: sessions.id });
+    return result.length > 0;
   }
 }
 
-export const storage = new MemStorage();
+// Use DatabaseStorage instead of MemStorage
+export const storage = new DatabaseStorage();

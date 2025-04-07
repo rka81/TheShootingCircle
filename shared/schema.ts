@@ -25,10 +25,18 @@ export const insertUserSchema = createInsertSchema(users).pick({
   password: true,
 });
 
-export const insertSessionSchema = createInsertSchema(sessions).omit({
-  id: true,
-  createdAt: true,
-});
+export const insertSessionSchema = createInsertSchema(sessions)
+  .omit({
+    id: true,
+    createdAt: true,
+  })
+  .transform((data) => ({
+    ...data,
+    // Convert undefined to null for compatibility with PostgreSQL
+    name: data.name ?? null,
+    playerName: data.playerName ?? null,
+    coachComment: data.coachComment ?? null
+  }));
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;

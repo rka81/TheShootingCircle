@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { insertSessionSchema, InsertSession } from "@shared/schema";
+import { type InsertSession } from "@shared/schema";
 import { 
   Form,
   FormControl,
@@ -16,9 +16,13 @@ import { Button } from "@/components/ui/button";
 import { SessionCounter, AccuracyBar } from "./session-counter";
 import { shareViaWhatsApp, shareViaEmail } from "@/lib/storage";
 
-// Extend the session schema for form validation
-const sessionFormSchema = insertSessionSchema.extend({
+// Create a form validation schema
+const sessionFormSchema = z.object({
   name: z.string().optional(),
+  totalShots: z.number().min(0),
+  scoredShots: z.number().min(0),
+  missedShots: z.number().min(0),
+  accuracy: z.number().min(0).max(100),
   playerName: z.string().optional(),
   coachComment: z.string().optional(),
 });
@@ -79,7 +83,18 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
 
     setIsPending(true);
     try {
-      await onSessionSave(data);
+      // Convert undefined to null for database compatibility
+      const sessionData: InsertSession = {
+        name: data.name || null,
+        totalShots: data.totalShots,
+        scoredShots: data.scoredShots,
+        missedShots: data.missedShots,
+        accuracy: data.accuracy,
+        playerName: data.playerName || null,
+        coachComment: data.coachComment || null
+      };
+      
+      await onSessionSave(sessionData);
       // Reset form
       form.reset();
       setTotalShots(0);
@@ -106,8 +121,8 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSessionSave, onClose }) => 
       scoredShots,
       missedShots,
       accuracy,
-      playerName: form.getValues("playerName") || undefined,
-      coachComment: form.getValues("coachComment") || undefined,
+      playerName: form.getValues("playerName") || null,
+      coachComment: form.getValues("coachComment") || null,
       createdAt: new Date()
     };
 
