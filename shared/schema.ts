@@ -37,6 +37,7 @@ export const challengeAttempts = pgTable("challenge_attempts", {
   id: serial("id").primaryKey(),
   challengeId: integer("challenge_id").notNull().references(() => challenges.id),
   sessionId: integer("session_id").notNull().references(() => sessions.id),
+  sessionAccuracy: integer("session_accuracy").notNull(),
   completed: boolean("completed").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

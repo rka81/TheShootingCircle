@@ -42,8 +42,7 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
 
   // Simple pass/fail based on accuracy comparison
   const isCompleted = latestAttempt ? 
-    latestAttempt.sessionAccuracy >= activeChallenge.goalAccuracy : 
-
+    (latestAttempt.sessionAccuracy ?? 0) >= activeChallenge.goalAccuracy : 
     false;
 
   // Calculate progress for progress bar

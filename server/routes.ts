@@ -37,7 +37,7 @@ const updateChallengeAttemptSchema = createInsertSchema(challengeAttempts)
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API routes for sessions
-  
+
   // Get all sessions
   app.get("/api/sessions", async (req, res) => {
     try {
@@ -112,7 +112,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Validate update data
       const validatedData = updateSessionSchema.parse(req.body);
-      
+
       const updatedSession = await storage.updateSession(id, validatedData);
       res.json(updatedSession);
     } catch (error) {
@@ -143,7 +143,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // API routes for challenges
-  
+
   // Get all challenges
   app.get("/api/challenges", async (req, res) => {
     try {
@@ -212,7 +212,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Validate update data
       const validatedData = updateChallengeSchema.parse(req.body);
-      
+
       const updatedChallenge = await storage.updateChallenge(id, validatedData);
       res.json(updatedChallenge);
     } catch (error) {
@@ -243,17 +243,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // API routes for challenge attempts
-  
+
   // Get challenge attempts (optionally filtered by challengeId)
   app.get("/api/challenge-attempts", async (req, res) => {
     try {
       const challengeId = req.query.challengeId ? parseInt(req.query.challengeId as string) : undefined;
-      
+
       // If challengeId is provided but invalid
       if (req.query.challengeId && isNaN(challengeId as number)) {
         return res.status(400).json({ message: "Invalid challenge ID" });
       }
-      
+
       const attempts = await storage.getChallengeAttempts(challengeId);
       res.json(attempts);
     } catch (error) {
@@ -265,29 +265,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/challenge-attempts", async (req, res) => {
     try {
       const validatedData = insertChallengeAttemptSchema.parse(req.body);
-      
+
       // Check if challenge exists
       const challenge = await storage.getChallenge(validatedData.challengeId);
       if (!challenge) {
         return res.status(404).json({ message: "Challenge not found" });
       }
-      
+
       // Check if session exists
       const session = await storage.getSession(validatedData.sessionId);
       if (!session) {
         return res.status(404).json({ message: "Session not found" });
       }
-      
+
       // Determine if attempt is completed based on challenge goals
       const isCompleted = 
         session.totalShots >= challenge.goalCount && 
         session.accuracy >= challenge.goalAccuracy;
-      
+
       const attempt = await storage.createChallengeAttempt({
         ...validatedData,
         completed: isCompleted
       });
-      
+
       res.status(201).json(attempt);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -312,7 +312,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Validate update data
       const validatedData = updateChallengeAttemptSchema.parse(req.body);
-      
+
       const updatedAttempt = await storage.updateChallengeAttempt(id, validatedData);
       res.json(updatedAttempt);
     } catch (error) {
