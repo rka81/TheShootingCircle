@@ -126,6 +126,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete all sessions
+  app.delete("/api/sessions", async (req, res) => {
+    try {
+      await storage.deleteAllSessions();
+      res.status(204).end();
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete all sessions" });
+    }
+  });
+
   // API routes for challenges
   
   // Get all challenges

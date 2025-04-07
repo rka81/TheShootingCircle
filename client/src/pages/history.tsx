@@ -3,6 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { type Session } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "@/hooks/use-toast";
 import {
   Select,
   SelectContent,
@@ -21,6 +24,44 @@ interface HistoryPageProps {
 
 const HistoryPage: React.FC<HistoryPageProps> = ({ onNavigate }) => {
   const [filter, setFilter] = useState<TimeFilter>("all");
+
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: () => fetch('/api/sessions', { method: 'DELETE' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/sessions'] });
+      toast({
+        title: "Success",
+        description: "All sessions have been deleted",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete sessions",
+        variant: "destructive",
+      });
+    }
+  });
+
+  const deleteSessionMutation = useMutation({
+    mutationFn: (id: number) => fetch(`/api/sessions/${id}`, { method: 'DELETE' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/sessions'] });
+      toast({
+        title: "Success",
+        description: "Session deleted successfully",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete session",
+        variant: "destructive",
+      });
+    }
+  });
 
   const { data: sessions, isLoading, error } = useQuery<Session[]>({
     queryKey: ['/api/sessions'],
@@ -130,8 +171,29 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ onNavigate }) => {
               <SelectItem value="high">Highest Accuracy</SelectItem>
             </SelectContent>
           </Select>
-          
-          <Button
+
+          <div className="flex gap-2">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="destructive" size="sm">
+                  Clear All
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Clear All Sessions</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to delete all shooting sessions? This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={() => deleteMutation.mutate()}>Delete All</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            
+            <Button
             onClick={() => onNavigate("home")}
             variant="ghost"
             className="text-brentwood-blue font-medium flex items-center"
@@ -144,7 +206,12 @@ const HistoryPage: React.FC<HistoryPageProps> = ({ onNavigate }) => {
         <div className="space-y-3">
           {filteredSessions.length > 0 ? (
             filteredSessions.map((session: Session) => (
-              <SessionCard key={session.id} session={session} />
+              <SessionCard 
+                key={session.id} 
+                session={session} 
+                showActions={true}
+                onDelete={(id) => deleteSessionMutation.mutate(id)}
+              />
             ))
           ) : (
             <div className="bg-white rounded-lg shadow-sm p-4 text-center">

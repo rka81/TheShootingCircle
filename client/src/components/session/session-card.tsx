@@ -65,6 +65,25 @@ const SessionCard: React.FC<SessionCardProps> = ({
               
               {showActions && (
                 <div className="flex space-x-2">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="ghost" size="sm" className="text-red-500">
+                        <i className="fas fa-trash-alt"></i>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete Session</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Are you sure you want to delete this shooting session? This action cannot be undone.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => onDelete(session.id)}>Delete</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                   <button 
                     className="text-gray-400 hover:text-brentwood-blue"
                     onClick={() => handleShare('whatsapp')}
