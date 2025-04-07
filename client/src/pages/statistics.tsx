@@ -111,14 +111,6 @@ const StatisticsPage: React.FC<StatisticsPageProps> = ({ onNavigate }) => {
           <h3 className="text-lg font-bold mb-3 text-brentwood-blue">Monthly Progress</h3>
           <MonthlyChart sessions={sessions || []} />
         </div>
-        
-        <Button
-          onClick={() => onNavigate("home")}
-          className="w-full bg-brentwood-blue hover:bg-brentwood-blue/90 text-white font-medium py-3 px-4 rounded-lg shadow-md mb-6 flex items-center justify-center transition-colors"
-        >
-          <i className="fas fa-arrow-left mr-2"></i>
-          Back to Home
-        </Button>
       </div>
     </div>
   );
