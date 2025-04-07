@@ -8,6 +8,7 @@ import HomePage from "@/pages/home";
 import NewSessionPage from "@/pages/new-session";
 import HistoryPage from "@/pages/history";
 import StatisticsPage from "@/pages/statistics";
+import Leaderboard from "@/pages/leaderboard"; // Added import for Leaderboard page
 import { NavPage, ProfileData } from "@/lib/types";
 import { getProfileFromLocalStorage } from "@/lib/storage";
 
@@ -61,6 +62,9 @@ function App() {
           )}
           {currentPage === "stats" && (
             <StatisticsPage onNavigate={handleNavigate} />
+          )}
+          {currentPage === "leaderboard" && (
+            <Leaderboard onNavigate={handleNavigate} /> // Added Leaderboard page
           )}
         </main>
 

@@ -12,6 +12,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ currentPage, onPageChange }) => {
     { id: "newSession", label: "New", icon: "fa-plus-circle" },
     { id: "history", label: "History", icon: "fa-history" },
     { id: "stats", label: "Stats", icon: "fa-chart-line" },
+    { id: "leaderboard", label: "Leaders", icon: "fa-trophy" },
   ];
 
   const activeColor = '#0c2576'; // Brentwood Blue

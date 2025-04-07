@@ -11,7 +11,7 @@ export interface SessionStats {
   accuracyTrend: number;
 }
 
-export type NavPage = 'home' | 'newSession' | 'history' | 'stats';
+export type NavPage = "home" | "newSession" | "history" | "stats" | "leaderboard";
 
 export interface ProfileData {
   name: string;
