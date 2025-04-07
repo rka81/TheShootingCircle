@@ -76,16 +76,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check for active challenge and create attempt if criteria met
       const activeChallenge = await storage.getActiveChallenge();
       if (activeChallenge) {
-        const isCompleted = 
-          session.totalShots >= activeChallenge.goalCount && 
-          session.accuracy >= activeChallenge.goalAccuracy;
+        try {
+          const isCompleted = 
+            session.totalShots >= activeChallenge.goalCount && 
+            session.accuracy >= activeChallenge.goalAccuracy;
 
-        await storage.createChallengeAttempt({
-          challengeId: activeChallenge.id,
-          sessionId: session.id,
-          sessionAccuracy: session.accuracy,
-          completed: isCompleted
-        });
+          await storage.createChallengeAttempt({
+            challengeId: activeChallenge.id,
+            sessionId: session.id,
+            sessionAccuracy: session.accuracy,
+            completed: isCompleted
+          });
+        } catch (error) {
+          console.error("Failed to create challenge attempt:", error);
+        }
       }
 
       res.status(201).json(session);
