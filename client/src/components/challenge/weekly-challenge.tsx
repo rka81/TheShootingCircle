@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "../ui/card";
@@ -38,16 +37,16 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
     (1000 * 60 * 60 * 24)
   );
 
-  // Calculate progress based on session accuracy
+  // Get latest attempt
   const latestAttempt = attempts?.[0];
-  const progress = latestAttempt ? 
-    Math.min((latestAttempt.sessionAccuracy / activeChallenge.goalAccuracy) * 100, 100) : 
-    0;
 
-  // Check if challenge is completed based on latest attempt's accuracy
+  // Simple pass/fail based on accuracy comparison
   const isCompleted = latestAttempt ? 
     latestAttempt.sessionAccuracy >= activeChallenge.goalAccuracy : 
     false;
+
+  // Calculate progress for progress bar
+  const progress = isCompleted ? 100 : 0;
 
   // Apply styles based on completion
   const buttonStyles = isCompleted 
