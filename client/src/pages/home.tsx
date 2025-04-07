@@ -21,6 +21,15 @@ interface HomePageProps {
   showProfile: boolean;
 }
 
+const WeeklyChallenge = () => {
+  return (
+    <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+      <h2 className="text-lg font-bold mb-3 text-brentwood-blue">Weekly Challenge</h2>
+      <p>Placeholder for Weekly Challenge content</p>
+    </div>
+  );
+};
+
 const HomePage: React.FC<HomePageProps> = ({ 
   onNavigate, 
   profileData,
@@ -131,7 +140,7 @@ const HomePage: React.FC<HomePageProps> = ({
             View All
           </button>
         </div>
-        
+
         {recentSessions.length > 0 ? (
           recentSessions.map(session => (
             <SessionCard key={session.id} session={session} />
@@ -149,8 +158,11 @@ const HomePage: React.FC<HomePageProps> = ({
         <WeeklyProgressChart sessions={sessions || []} />
       </div>
 
-      {/* Achievement Badges */}
       <AchievementGrid achievements={achievements} />
+      <WeeklyChallenge />
+      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+        {/* Leaderboard would go here */}
+      </div>
     </div>
   );
 };
