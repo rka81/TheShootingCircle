@@ -43,6 +43,5 @@ CREATE TABLE challenge_attempts (
     session_id INTEGER NOT NULL REFERENCES sessions(id),
     accuracy INTEGER NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    CONSTRAINT fk_session FOREIGN KEY (session_id) REFERENCES sessions(id)
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
