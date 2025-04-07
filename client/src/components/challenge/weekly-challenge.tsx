@@ -38,11 +38,19 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
     (1000 * 60 * 60 * 24)
   );
 
-  // Calculate progress based on attempts
+  // Calculate progress based on session accuracy
   const latestAttempt = attempts?.[0];
   const progress = latestAttempt ? 
     Math.min((latestAttempt.sessionAccuracy / activeChallenge.goalAccuracy) * 100, 100) : 
     0;
+
+  // Check if challenge is completed
+  const isCompleted = latestAttempt?.completed || false;
+
+  // Apply styles based on completion
+  const buttonStyles = isCompleted 
+    ? "bg-green-500 text-white hover:bg-green-600" 
+    : "hover:bg-brentwood-blue hover:text-white";
 
   return (
     <Card className="p-4 mb-6">
@@ -64,12 +72,12 @@ export const WeeklyChallenge: React.FC<WeeklyChallengeProps> = ({ onNavigate }) 
             Required Accuracy: {activeChallenge.goalAccuracy}%
           </span>
           <Button 
-            variant="outline" 
+            variant={isCompleted ? "default" : "outline"}
             size="sm" 
-            className="hover:bg-brentwood-blue hover:text-white"
+            className={buttonStyles}
             onClick={() => onNavigate("newSession")}
           >
-            Take Challenge
+            {isCompleted ? "Completed!" : "Take Challenge"}
           </Button>
         </div>
       </div>
